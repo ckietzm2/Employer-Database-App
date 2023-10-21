@@ -1,0 +1,16 @@
+{
+  "name": "employer-database-app",
+  "version": "1.0.0",
+  "description": "This application allows an employer to quickly enter employee data and organize it.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^8.2.4"
+  }
+}
