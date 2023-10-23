@@ -1,5 +1,5 @@
 const express = require('express');
-// Import and require mysql2
+const inquirer = require('inquirer');
 const mysql = require('mysql2');
 
 const PORT = process.env.PORT || 3001;
@@ -21,16 +21,69 @@ const db = mysql.createConnection(
   },
   console.log(`Connected to the employer_db database.`)
 );
-db.query('SELECT * FROM employees', function (err, results) {
-   if (err) {
-    console.log(err);
-   }
-    console.log(results);
-  });
-app.use((req, res) => {
-    res.status(404).end();
-  });
+
+function promptUser() {
+inquirer
+  .prompt([
+    {
+      type: 'list',
+      message: 'Please select an option from the menu:',
+      choices: ["View All Departments", "View All Roles", "View All Employees", "Add a Department", "Add a Role", "Add an Employee", "Update an Employee Role","Quit"],
+      name: 'choice',
+    }
+  ])
+  .then(answers => {
+    const choice = answers.choice;
+
+    switch (choice) {
+        case "View All Departments":
+          db.query('SELECT name FROM department', function (err, results) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.table(results);
+            }
+            promptUser()
+          });
+          break;
   
-  app.listen(PORT, () => {
-    console.log(`Example app listening at http://localhost:${PORT}`);
+        case "View All Roles":
+          db.query('SELECT * FROM role', function (err, results) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.table(results);
+            }
+            promptUser()
+          });
+          break;
+
+          case "View All Employees":
+          db.query('SELECT * FROM employees JOIN role on employees.id=role.id', function (err, results) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.table(results);
+            }
+            promptUser()
+          });
+          break;
+
+          case "Quit":
+            console.log('Thank You!');
+            process.exit();
+          break;
+
+    }
   });
+
+}
+
+
+
+
+
+
+
+
+promptUser()
