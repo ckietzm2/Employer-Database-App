@@ -22,6 +22,9 @@ const db = mysql.createConnection(
   console.log(`Connected to the employer_db database.`)
 );
 db.query('SELECT * FROM employees', function (err, results) {
+   if (err) {
+    console.log(err);
+   }
     console.log(results);
   });
 app.use((req, res) => {
