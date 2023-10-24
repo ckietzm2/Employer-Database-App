@@ -31,3 +31,6 @@ VALUES
     ('Tessa', 'Gerling',6,5),
     ('James', 'Lee', 7 ,NULL),
     ('Andrew', 'Jackson', 8 ,7);
+
+
+    
